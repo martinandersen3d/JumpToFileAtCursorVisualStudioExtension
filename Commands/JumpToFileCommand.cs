@@ -55,11 +55,9 @@ internal sealed class JumpToFileCommand : BaseCommand<JumpToFileCommand>
             }
             else
             {
-                await VS.MessageBox.ShowAsync(
-                    $"Could not find a file named '{searchText}'",
-                    "File Not Found",
-                    OLEMSGICON.OLEMSGICON_INFO,
-                    OLEMSGBUTTON.OLEMSGBUTTON_OK);
+                // If file not found, open the built-in Go To File dialog (Edit > Go To > Go To File)
+                // Execute the corresponding Visual Studio command
+                dte.ExecuteCommand("Edit.GoToFile");
             }
         }
         catch (Exception ex)
