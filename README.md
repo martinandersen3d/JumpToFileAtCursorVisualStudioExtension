@@ -11,6 +11,8 @@ Jump to:
 - JavaScript file
 - Any file by the same name that the cursor is placed over
 
+**Works for:** Visual Studio 2022 / 2026
+
 A small Visual Studio extension that makes it easy to jump to a file whose name is under the text caret. This is especially useful in ASP.NET MVC/Razor views where filenames are referenced in markup and it's otherwise tedious to locate the corresponding file in Solution Explorer.
 
 **Example:** Using a hotkey, it will jump to the filename at the cursors position
