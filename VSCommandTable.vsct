@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+  <Include href="VSGlobals.vsct"/>
+
+  <Commands package="JumpToFileAtCursorVisualStudioExtension">
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="JumpToFileAtCursorVisualStudioExtension" value="{fd8f8e98-70d5-43f3-a2f9-b1ab9b4b36a9}">
+      
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
