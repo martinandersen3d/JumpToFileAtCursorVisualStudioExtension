@@ -26,15 +26,17 @@ internal sealed class JumpToFileCommand : BaseCommand<JumpToFileCommand>
             TextSelection selection = (TextSelection)dte.ActiveDocument.Selection;
             TextPoint point = selection.ActivePoint;
 
-            // If nothing is explicitly selected, expand selection to the word under cursor
+            string searchText;
+
+            // If nothing is explicitly selected, compute the word under the cursor manually
             if (selection.IsEmpty)
             {
-                // Expand selection to the current word using WordLeft/WordRight
-                selection.WordLeft(true);
-                selection.WordRight(true);
+                searchText = GetWordUnderCursor(point);
             }
-
-            string searchText = selection.Text.Trim();
+            else
+            {
+                searchText = selection.Text.Trim();
+            }
 
             if (string.IsNullOrEmpty(searchText))
             {
@@ -103,5 +105,45 @@ internal sealed class JumpToFileCommand : BaseCommand<JumpToFileCommand>
             }
         }
         return null;
+    }
+
+    // Get the full word under the cursor. Word characters allowed: letters, digits, '-' and '_'.
+
+    private string GetWordUnderCursor(TextPoint point)
+    {
+        ThreadHelper.ThrowIfNotOnUIThread();
+
+        var editPoint = point.CreateEditPoint();
+        string line = editPoint.GetLines(point.Line, point.Line + 1);
+
+        if (string.IsNullOrEmpty(line)) return string.Empty;
+
+        int index = Math.Max(0, point.LineCharOffset - 1);
+        if (index >= line.Length) index = line.Length - 1;
+
+        // If the caret is on a non-word character, try to move right to find a word
+        if (!IsWordChar(line[index]))
+        {
+            int temp = index;
+            while (temp < line.Length && !IsWordChar(line[temp])) temp++;
+            if (temp >= line.Length) return string.Empty;
+            index = temp;
+        }
+
+        int left = index;
+        while (left > 0 && IsWordChar(line[left - 1])) left--;
+
+        int right = index;
+        while (right < line.Length && IsWordChar(line[right])) right++;
+
+        int len = right - left;
+        if (len <= 0) return string.Empty;
+
+        return line.Substring(left, len);
+    }
+
+    private bool IsWordChar(char c)
+    {
+        return char.IsLetterOrDigit(c) || c == '-' || c == '_';
     }
 }
