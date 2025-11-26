@@ -16,6 +16,14 @@ internal sealed class JumpToFileCommand : BaseCommand<JumpToFileCommand>
             // 1. Get the DTE (Development Tools Environment) service
             DTE2 dte = await VS.GetServiceAsync<DTE, DTE2>();
 
+            // Quick check: ensure a document window is active (simple proxy for editor focus).
+            // If not, open Go To File directly.
+            if (dte?.ActiveWindow == null || dte.ActiveWindow.Type != vsWindowType.vsWindowTypeDocument)
+            {
+                dte.ExecuteCommand("Edit.GoToFile");
+                return;
+            }
+
             if (dte?.ActiveDocument == null)
             {
                 // No file is currently open
