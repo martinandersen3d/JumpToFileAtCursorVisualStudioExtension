@@ -7,11 +7,24 @@
   <Include href="VSGlobals.vsct"/>
 
   <Commands package="JumpToFileAtCursorVisualStudioExtension">
+    <Buttons>
+      <Button guid="JumpToFileAtCursorVisualStudioExtension" id="JumpToFileCommand" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+        <Strings>
+          <ButtonText>Jump to File at Cursor</ButtonText>
+          <LocCanonicalName>.Tools.JumpToFileAtCursor</LocCanonicalName>
+        </Strings>
+      </Button>
+    </Buttons>
   </Commands>
+
+  <KeyBindings>
+    <KeyBinding guid="JumpToFileAtCursorVisualStudioExtension" id="JumpToFileCommand" mod1="Control Shift" key1="O" editor="guidVSStd97"/>
+  </KeyBindings>
 
   <Symbols>
     <GuidSymbol name="JumpToFileAtCursorVisualStudioExtension" value="{fd8f8e98-70d5-43f3-a2f9-b1ab9b4b36a9}">
-      
+      <IDSymbol name="JumpToFileCommand" value="0x0001"/>
     </GuidSymbol>
   </Symbols>
 </CommandTable>

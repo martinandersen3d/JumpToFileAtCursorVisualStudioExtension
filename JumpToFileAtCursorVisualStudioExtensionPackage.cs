@@ -14,6 +14,6 @@ public sealed class JumpToFileAtCursorVisualStudioExtensionPackage : ToolkitPack
 {
     protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
     {
-        await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+        await this.RegisterCommandsAsync();
     }
 }
